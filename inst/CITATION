@@ -1,0 +1,26 @@
+citHeader("To cite the RSCABS package in publications use:")
+
+
+citEntry(entry = "Article",
+     author  = personList(as.person("John Green"),
+                  as.person("Timothy Springer"),
+				   as.person("Amy Saulnier"),
+				   as.person("Joe Swintek")
+				   ),				   
+	title = "Statistical analysis of histopathological endpoints",
+	journal = "Environmental Toxicology and Chemistry",
+	volume = "33",
+	number = "5",
+	issn = "1552-8618",
+	url = "http://dx.doi.org/10.1002/etc.2530",
+	doi = "10.1002/etc.2530",
+	pages = "1108--1116",
+	keywords = "Ecotoxicology, Histopathology, Severity score, Step-down trend test, Overdispersion",
+	year = "2014",
+
+textVersion  =
+  paste("Green, John W., Springer, Timothy A., and Saulnier, Amy N., and Swintek, Joe (2014)",
+        "Statistical analysis of histopathological endpoints.",
+        "TEnvironmental Toxicology and Chemistry 14: 134-140",
+        "URL: http://dx.doi.org/10.1002/etc.2530")
+)
