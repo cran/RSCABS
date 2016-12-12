@@ -1,4 +1,4 @@
-17905aa04d575ed89c1279fc2d0dc455 *DESCRIPTION
+f4a0e2257b60414b653836c539b00aba *DESCRIPTION
 ed9a7a2b70e963bccd0fddf23f3690d5 *INDEX
 37dbe6b4564986b35935d2d70b59061b *NAMESPACE
 792995b1b6e2b09f43e818e40f65f725 *R/Histopath.R
@@ -35,8 +35,8 @@ a870ed7033861c84c06df8ec1e30a980 *R/stepDownRSCABS.R
 26c674d251f79f186d0d316dcdd42b47 *data/exampleHistData.rda
 276cb668c23ed21ff7cb184e29fc9693 *inst/CITATION
 931e189d3ff6d3a20a647d33156b7239 *inst/doc/RSCABS.R
-bab5c7b53c015e25c5b6dcfda9067fab *inst/doc/RSCABS.Rnw
-48d1e71411cce0f77faf22facdc0d953 *inst/doc/RSCABS.pdf
+3017eed33cea556f7f84980246379259 *inst/doc/RSCABS.Rnw
+6e974e091d570f175d0ff5dc3cfb5224 *inst/doc/RSCABS.pdf
 1b2d793ca5fa8e77aa9234fd715ce77e *man/Histopath.Rd
 470ffda849ac278644144a7c1e5f71ab *man/RSCABK.Rd
 43150a0dcb4deb78aa09bf6bec061433 *man/RSCABS-package.Rd
@@ -87,7 +87,7 @@ b3d8501e03ef46735ec6f8903cc28ff5 *vignettes/R/convert2Score.R
 c3611bd61b9bcb4de6a4c868565d4a4b *vignettes/R/runRSCABS.R
 7086ab05de091f55ae5b119cf9682233 *vignettes/R/stepDownRSCABS.R
 319bb8f9fb4e3a2de321c09c929f8cc6 *vignettes/R/stepKRSCABS.R
-bab5c7b53c015e25c5b6dcfda9067fab *vignettes/RSCABS.Rnw
+3017eed33cea556f7f84980246379259 *vignettes/RSCABS.Rnw
 4b5fdb5ccbc12905df416d3b53cf0359 *vignettes/RSCABS1.png
 13affb18149aebeaa25002d8b3191b54 *vignettes/RSCABS2.png
 d4643d1bb5e7e8a8f8d43ef9f0a7b895 *vignettes/RSCABS3.png

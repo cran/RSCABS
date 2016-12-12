@@ -38,8 +38,8 @@
 
 \maketitle
 \clearpage
-\tableofcontents
-\clearpage
+%\tableofcontents
+%\clearpage
 
 
 \section*{Introduction}
@@ -259,7 +259,7 @@ More details on each histopathological endpoint can be attained through the use 
 \par
 	
  The [Get Details on a Response] button will supply three tables for the selected response; a table for the 
- chi-squared ({\chi}^2)  test for heterogeneity of between-replicate variances. A frequency table, which contains the total observations
+ Chi-squared (${\chi}^2$) test for heterogeneity of between-replicate variances. A frequency table, which contains the total observations
  for each combination of treatment (shown in the columns) and slice of score (shown in the rows). 
  There will also be an additional table showing the results of RSCABS for that treatment level.  
  If there are several unique severity scores for an endpoint, results for the lowest severity score will be displayed 
@@ -471,14 +471,14 @@ Lastly, the \textbf{plotRSCABS} function can also include any argument used by t
 \begin{enumerate}
 \item Armitage, P. 1955. Tests for Linear Trends in Proportions and Frequencies. \textit{Biometrics} \textbf{11}(3): 417\textemdash451
 
-\item  Cochran, WG 1954. Some methods for strengthening the common chi-squared tests. \textit{Biometrics}  \textbf{10}(4): 417\textemdash451
+\item  Cochran, WG 1954. Some methods for strengthening the common $\chi$-squared tests. \textit{Biometrics}  \textbf{10}(4): 417\textemdash451
 
 \item Green, John W. and Springer, Timothy A. and Saulnier, Amy N. and Swintek, Joe. 2014 Statistical analysis of histopathological endpoints. 
 	\textit{Environmental Toxicology and Chemistry}, \textbf{33}(5): 1108\textemdash1116
 
 \item OECD Guidelines for the Testing of Chemicals, Section 2. Test No. 240. DOI10.1787/20745761 
 
-\item  Rao, J. N. K. & Scott, A. J. A. 1992. Simple Method for the Analysis of Clustered Data. \textit{Biometrics}, \textbf{48}: 577\textemdash586. 
+\item Rao, J. N. K. and Scott, A. J. A. 1992. Simple Method for the Analysis of Clustered Data. \textit{Biometrics}, \textbf{48}: 577\textemdash586. 
 
 \end{enumerate}
 
