@@ -1,4 +1,4 @@
-f4a0e2257b60414b653836c539b00aba *DESCRIPTION
+a000c6cdfe2dadb05c10530de70e2319 *DESCRIPTION
 ed9a7a2b70e963bccd0fddf23f3690d5 *INDEX
 37dbe6b4564986b35935d2d70b59061b *NAMESPACE
 792995b1b6e2b09f43e818e40f65f725 *R/Histopath.R
@@ -27,7 +27,7 @@ f619bd6c13617ab2f4d8cb5107c26a72 *R/runStdSubset.R
 8bc364277d708b910937744a36867d21 *R/saveFile.R
 d8c3d78893b2782597f7df5bca09f814 *R/selectPara.r
 7e352fc943aed818e341c57193af1dad *R/setPlotParms.r
-a870ed7033861c84c06df8ec1e30a980 *R/stepDownRSCABS.R
+d0c3ba6cbb7f54f98078eb1a601c4d30 *R/stepDownRSCABS.R
 319bb8f9fb4e3a2de321c09c929f8cc6 *R/stepKRSCABS.R
 3b48f1ad7c2fcb1742c0faed1103ae0f *R/subsetDataKeep.R
 8e185bb7cbd9e6f27a3d9b7496b84f28 *R/zzz.r
@@ -36,7 +36,7 @@ a870ed7033861c84c06df8ec1e30a980 *R/stepDownRSCABS.R
 276cb668c23ed21ff7cb184e29fc9693 *inst/CITATION
 931e189d3ff6d3a20a647d33156b7239 *inst/doc/RSCABS.R
 3017eed33cea556f7f84980246379259 *inst/doc/RSCABS.Rnw
-6e974e091d570f175d0ff5dc3cfb5224 *inst/doc/RSCABS.pdf
+24a8e1fea5540a78518635896fd4fc1c *inst/doc/RSCABS.pdf
 1b2d793ca5fa8e77aa9234fd715ce77e *man/Histopath.Rd
 470ffda849ac278644144a7c1e5f71ab *man/RSCABK.Rd
 43150a0dcb4deb78aa09bf6bec061433 *man/RSCABS-package.Rd
@@ -58,7 +58,7 @@ c960dd30e77cdbd0bffc1b9f09a6a5d6 *man/plotRSCABS.Rd
 b9b26ec418ea41438aa35852cfcf3613 *man/prepDataRSCABS.Rd
 41385d128d948cd56147884f4767a3c4 *man/runDetailedResults.Rd
 207a86c578ab427f4ac6124614afc576 *man/runEffectSelect.Rd
-5c15a9dad5ba98341a5903f8d2abe893 *man/runRSCABS.Rd
+34583d6ed7a33a67d53ed4707843ded8 *man/runRSCABS.Rd
 ff2e85545d607d44a5dc7b83e1e47959 *man/runStdSubset.Rd
 5359a741a672fc5d48304dae91631803 *man/saveCB.Rd
 2819e79aec97a277d83c511a429cbde6 *man/saveFile.Rd

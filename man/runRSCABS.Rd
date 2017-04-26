@@ -48,7 +48,7 @@
 		The corresponding p-value
 	}
 	\item{Signif}{
-		The significance flag where"." is a p-value > 0.05, "*" is a 0.01 < p-value <=  0.05, "**" for 0.001 <  p-value <=  0.01, and "***" for p-value <= 0.001.
+		The significance flag where "." is a p-value > 0.05, "*" is a 0.01 < p-value <=  0.05, "**" for 0.001 <  p-value <=  0.01, and "***" for p-value <= 0.001.
 	}
 }
 
@@ -56,6 +56,7 @@
 	Green, John W. and Springer, Timothy A. and Saulnier, Amy N. and Swintek, Joe, (2014) Statistical analysis of histopathological endpoints. 
 	Environmental Toxicology and Chemistry, 33(5), 1108-1116
 }
+
 \author{
 	Joe Swintek
 }
