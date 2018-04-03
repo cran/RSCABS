@@ -11,6 +11,8 @@ function(){
 .RSCABSEnv$AgeVar<-'Not Used'
 .RSCABSEnv$AgeVal<-'Not Used'
 .RSCABSEnv$ReplicateVar<-''
+.RSCABSEnv$InverseScaleVar<-'Not Used' #a vector of column names in inverse severity scale  
+.RSCABSEnv$ExcludeVar<-'Not Used' #a vector of column names used to exclude endpoints from the analysis 
 
 #main Window 
 #Containers are scoped by white space  
@@ -34,28 +36,50 @@ function(){
 		.RSCABSEnv$SpecButton<-gbutton("Specify Data",handler= function(h,...){ #This will bring up the data Specification tab   
 		addHistoSpec(.RSCABSEnv$HistosNotebook)})
 		.RSCABSEnv$RunButton<-gbutton("Run RSCABS",handler= function(h,...){ #Runs RSCABS
-		if (.RSCABSEnv$CanRun==FALSE){
-		popMessage('please specify the data first.')
-		}
-		if (.RSCABSEnv$CanRun==TRUE){
-		popMessage('The analysis is running this may take a moment')
-		if (.RSCABSEnv$ReplicateVar==''){
-		popMessage('A Replicate variable was not defined; Histopath will run SCABS instead of RSCABS')
+			if (.RSCABSEnv$CanRun==FALSE){
+				popMessage('please specify the data first.')
+			}
+			if (.RSCABSEnv$CanRun==TRUE){
+				popMessage('The analysis is running this may take a moment')
+			if (.RSCABSEnv$ReplicateVar==''){
+				popMessage('A Replicate variable was not defined; Histopath will run SCABS instead of RSCABS')
+			}
+			
+			#Invert data for the analysis 
+			if (is.element('Not Used',.RSCABSEnv$InverseScaleVar)==FALSE){
+				.RSCABSEnv$UseData<-.invertOrder(.RSCABSEnv$UseData,.RSCABSEnv$InverseScaleVar)
+			}
+			Sys.sleep(0.1) #need to pause 
+			
+			#Run main analysis 
+			.RSCABSEnv$ResultsMain<-RSCABSMain(.RSCABSEnv$UseData,.RSCABSEnv$TreatmentVar,.RSCABSEnv$ReplicateVar,FALSE) #RSCABS
+			
+			#Adjust for replicate outputs
+			.RSCABSEnv$ResultsMain<-unique(.RSCABSEnv$ResultsMain)
+			
+			#Reorder the results
+			.RSCABSEnv$ResultsMain<-.orderOutput(.RSCABSEnv$ResultsMain)
+			
+			
+			#Un-invert the scale for plotting purposes
+			if (is.element('Not Used',.RSCABSEnv$InverseScaleVar)==FALSE){
+				.RSCABSEnv$UseData<-.invertOrder(.RSCABSEnv$UseData,.RSCABSEnv$InverseScaleVar)
+				#Un-invert the R-Score on the results tags 
+				.RSCABSEnv$ResultsMain<-.tagInvert(.RSCABSEnv$ResultsMain,.RSCABSEnv$UseData,.RSCABSEnv$InverseScaleVar)
+			}
+			Sys.sleep(0.1) #need to pause 
 
-		}
-
-		.RSCABSEnv$ResultsMain<-RSCABSMain(.RSCABSEnv$UseData,.RSCABSEnv$TreatmentVar,.RSCABSEnv$ReplicateVar,FALSE) #RSCABS
-		delete(.RSCABSEnv$DataBox,.RSCABSEnv$DataGrid)		
-		Sys.sleep(0.1) #need to pause 
-		.RSCABSEnv$DataGrid<-gtable(.RSCABSEnv$ResultsMain)
-		add(.RSCABSEnv$DataBox,.RSCABSEnv$DataGrid,expand=TRUE)
-		add(.RSCABSEnv$ButtonBox,.RSCABSEnv$SaveButton)       
-		Sys.sleep(0.1) #need to pause 
-			plotPath() #call plots
-		
-		}
+			delete(.RSCABSEnv$DataBox,.RSCABSEnv$DataGrid)		
+			Sys.sleep(0.1) #need to pause 
+			.RSCABSEnv$DataGrid<-gtable(.RSCABSEnv$ResultsMain)
+			add(.RSCABSEnv$DataBox,.RSCABSEnv$DataGrid,expand=TRUE)
+			add(.RSCABSEnv$ButtonBox,.RSCABSEnv$SaveButton)       
+			Sys.sleep(0.1) #need to pause 
+				plotPath() #call plots
+			
+			}
 		})
-		.RSCABSEnv$OtherButton<-gbutton("Run Other Analyses",handler= function(h,...){ #For other analyses
+			.RSCABSEnv$OtherButton<-gbutton("Run Other Analyses",handler= function(h,...){ #For other analyses
 		otherPath()
 		})
 		.RSCABSEnv$SaveButton<-gbutton("Save Result",handler= function(h,...){ #Save the results

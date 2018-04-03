@@ -1,5 +1,5 @@
 detailedResults2HTML <-
-function(Results,k,Dir,Effect){
+function(Results,k,Dir,Effect,Inverse=FALSE){
 #This will generate an HTLM Report on the detailed analysis of a Response
 #requires the use of a R2HTML library  
 #k is the current Severity score
@@ -21,7 +21,11 @@ Freqtable<-Result$Step[[1]]$FreqTable
 Freqtable<-cbind(Freqtable,rowSums(Freqtable))
 Freqtable<-rbind(Freqtable,colSums(Freqtable))
 
-Freqtable<-cbind(c(paste('<',k,sep=''),paste('>=',k,sep='')  ,'Total'),Freqtable)
+if (Inverse==TRUE){
+	Freqtable<-cbind(c(paste('>',k,sep=''),paste('<=',k,sep='')  ,'Total'),Freqtable)
+}else{
+	Freqtable<-cbind(c(paste('<',k,sep=''),paste('>=',k,sep='')  ,'Total'),Freqtable)
+}
 Freqtable<-as.data.frame(Freqtable)
 colnames(Freqtable)<-c('Score/Treatment',1:{dim(Freqtable)[2]-2},'Total')
 }

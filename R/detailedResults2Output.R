@@ -1,5 +1,5 @@
 detailedResults2Output <-
-function(Effect,Results,k,ResultsBox,BoolNotebook,Notebook=NULL){
+function(Effect,Results,k,ResultsBox,BoolNotebook,Notebook=NULL,Inverse=FALSE){
 #This is built into the GUI and only output to the GUI
 #k is the current Severity score
 #ResultsBox this is the box in the gui 
@@ -19,8 +19,12 @@ Nstep<-length(Result$Step)
 Freqtable<-Result[['Step']][[1]][['FreqTable']]
 Freqtable<-cbind(Freqtable,rowSums(Freqtable))
 Freqtable<-rbind(Freqtable,colSums(Freqtable))
+if (Inverse==TRUE){
+	Freqtable<-cbind(c(paste('>',k,sep=''),paste('<=',k,sep='')  ,'Total'),Freqtable)
+}else{
+	Freqtable<-cbind(c(paste('<',k,sep=''),paste('>=',k,sep='')  ,'Total'),Freqtable)
+}
 
-Freqtable<-cbind(c(paste('<',k,sep=''),paste('>=',k,sep='')  ,'Total'),Freqtable)
 Freqtable<-as.data.frame(Freqtable)
 colnames(Freqtable)<-c('Score/Treatment',1:{dim(Freqtable)[2]-2},'Total')
 
@@ -52,30 +56,28 @@ RSCABTable<-NULL
 }
 #This OutPuts to the GUI, on the first tab
 if (BoolNotebook==FALSE){
-Frame1<-gframe(horizontal = FALSE, container=ResultsBox) #Chi-Squared Table 
-Lab1<-glabel("Chi-Squared Heterogeneity Check of Between Replicate Variances",container=Frame1)
-if (is.null(ChiTable) != TRUE){
-.RSCABSEnv$DataGrid1<-gtable(ChiTable,container=ResultsBox,expand=TRUE)
-}else{
-LabChi<-glabel("There is no change in treatment for this R score",container=ResultsBox)
-}
+	Frame1<-gframe(horizontal = FALSE, container=ResultsBox) #Chi-Squared Table 
+	Lab1<-glabel("Chi-Squared Heterogeneity Check of Between Replicate Variances",container=Frame1)
+	if (is.null(ChiTable) != TRUE){
+		.RSCABSEnv$DataGrid1<-gtable(ChiTable,container=ResultsBox,expand=TRUE)
+	}else{
+		LabChi<-glabel("There is no change in treatment for this R score",container=ResultsBox)
+	}
 
-Frame2<-gframe(horizontal = FALSE, container=ResultsBox) #Frequency Table
-Lab2<-glabel("Frequency Table",container=Frame2)
-if (is.null(Freqtable) != TRUE){
-.RSCABSEnv$DataGrid2<-gtable(Freqtable,container=ResultsBox,expand=TRUE)
-}else{
-LabFreq<-glabel("There is no Data",container=ResultsBox)
-}
-Frame3<-gframe(horizontal = FALSE, container=ResultsBox)  #RSCABS Table
-Lab3<-glabel("Rao-Scott Cochran-Armitage Test",container=Frame3)
-if (is.null(RSCABTable) != TRUE){
-
-.RSCABSEnv$DataGrid3<-gtable(RSCABTable,container=ResultsBox,expand=TRUE)
-.RSCABSEnv$DataGrid3<-gtable(RSCABTable,container=ResultsBox,expand=TRUE)
-}else{
-LabRSCAB<-glabel("There is no change in treatment for this R score",container=ResultsBox)
-}
+	Frame2<-gframe(horizontal = FALSE, container=ResultsBox) #Frequency Table
+	Lab2<-glabel("Frequency Table",container=Frame2)
+	if (is.null(Freqtable) != TRUE){
+		.RSCABSEnv$DataGrid2<-gtable(Freqtable,container=ResultsBox,expand=TRUE)
+	}else{
+		LabFreq<-glabel("There is no Data",container=ResultsBox)
+	}
+	Frame3<-gframe(horizontal = FALSE, container=ResultsBox)  #RSCABS Table
+	Lab3<-glabel("Rao-Scott Cochran-Armitage Test",container=Frame3)
+	if (is.null(RSCABTable) != TRUE){
+		.RSCABSEnv$DataGrid3<-gtable(RSCABTable,container=ResultsBox,expand=TRUE)
+	}else{
+		LabRSCAB<-glabel("There is no change in treatment for this R score",container=ResultsBox)
+	}
 return()
 }
 

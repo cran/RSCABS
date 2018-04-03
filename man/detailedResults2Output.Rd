@@ -8,7 +8,8 @@
 	An internal function that prints results from \code{\link{runDetailedResults}} to the window.   
 }
 \usage{
-detailedResults2Output(Effect, Results, k, ResultsBox, BoolNotebook, Notebook = NULL)
+detailedResults2Output(Effect, Results, k, ResultsBox, BoolNotebook, 
+	Notebook = NULL, Inverse=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -32,6 +33,10 @@ detailedResults2Output(Effect, Results, k, ResultsBox, BoolNotebook, Notebook = 
   \item{Notebook}{
 	The current notebook.
 }
+  \item{Inverse}{
+	Bool indicating an inverse scale endpoint.
+}
+
 }
 
 

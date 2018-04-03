@@ -38,8 +38,8 @@
 
 \maketitle
 \clearpage
-%\tableofcontents
-%\clearpage
+\tableofcontents
+\clearpage
 
 
 \section*{Introduction}
@@ -48,7 +48,7 @@
 \addcontentsline{toc}{section}{Introduction}	
 
 	RSCABS[3] (\underline{R}ao-\underline{S}cott adjusted \underline{C}ochran-\underline{A}rmitage trend test \underline{B}y \underline{S}lices) is a modification to the Rao-Scott[5] adjusted Cochran-Armitage trend test[1, 2] 
-	that allows for testing at each individual severity score often seen in histopathological data.  The test was originally developed and implemented in SAS\texttrademark{} by John Green(\footnote{DuPont Applied Statistics Group}) as part of the 
+	that allows for testing at each individual severity score often seen in histopathological data.  The test was originally developed and implemented in SAS\texttrademark{} by John Green\footnote{DuPont Applied Statistics Group} as part of the 
 	 \underline{M}edaka  \underline{E}xtended  \underline{O}ne  \underline{G}eneration  \underline{R}eproduction  \underline{T}est[4] (MEOGRT) with the purpose of testing the effects of endocrine disruptors on histopathological endpoints. 
 	The RSCABS package allows for easy use of the RSCABS analysis with the capability of using both command line and graphical user interface (GUI) driven operations.      
 
@@ -69,15 +69,15 @@
 	The Cochran-Armitage (CA) trend [1,2]  test was developed to test for this increase.
 	However, it is common for group of organisms to be contained within the same holding apparatus.  
 	This could lead to organisms within the same apparatus having results that more closely resemble each other, then organisms in other apparatuses.  	
-	The Rao-Scott (RS) adjustment controls for this by calculating an adjusting to the CA test statistic from correlation of organisms within each apparatuses. 
+	The Rao-Scott (RS) adjustment controls for this by calculating an adjustment to the CA test statistic from correlation of organisms within each apparatuses. 
 	The by slices (BS) portion of the test allows for testing at each severity score instead of just presences or absence.  By slices works by splitting the
 	the severity scores associated with an endpoint into two groups based on the severity score being tested.  
 	One group contains all severity score less then the target 
-	severity score and the other group contains all severity scores equal to or greater then the target severity score. 	
+	severity scores and the other group contains all severity scores equal to or greater then the target severity score. 	
 	The RSCA test statistic is calculated based on these two groups instead of just a presences (score  $\geq$  1) and absence (score < 0). For example testing at a severity score of 2 
 	would involve splitting the data into a group of severity scores < 2 
 	and a group of all severity scores $\geq$  2. 
-	RSCABS is a step down anylsis so, if the test statistic is calculated to be significant (p-value $\geq$  0.05) then 
+	RSCABS is a step down anylsis so, if the test statistic is calculated to be significant (typically, p-value $\leq$  0.05) then 
 	highest treatment level is removed from the analysis and the RSCA test statistic is recalculated. 
 	The process is repeated until the test statistic is not significant or there are no treatment levels left.  
 	This step-down procedure is repeated for each unique score assigned to an endpoint. Further details an examples of RSCABS can be found in [3]. 	
@@ -96,8 +96,8 @@
 
 \begin{RBox}
 > install.packages(RSCABS)	#Install RSCABS from CRAN
-> library(RSCABS)			#Load the RSCABS library
-> Histopath()				#Calls the GUI for RSCABS
+> library(RSCABS)		 #Load the RSCABS library
+> Histopath()	 	    #Calls the GUI for RSCABS
 \end{RBox}
 
 
@@ -148,11 +148,11 @@ upon importing the file.
 \par
  Histopath separates the data into three types of fields; identification, pathology endpoints, and ignored fields.  
  The identification fields include a field for each of: \textbf{gender}, \textbf{generation},  \textbf{age},  \textbf{treatment}, and  
- \textbf{replicate}.  Of the identification fields \textbf{treatment} must be included in the data set while \textbf{gender}, \textbf{generation},  
- \textbf{age}, and \textbf{replicate} are not mandatory. However, if the replicate field is not included in the data set, Histopath will assume each specimen is 
- independent and not apply the Rao-Scott adjustment.  
- This may increase the rate of false positives if this independence assumption does not hold.  
- If an identification field is used then every entry that field must have a value otherwise the row associated with that field will be removed when RSCABS is ran. 
+ \textbf{replicate}.  Of the identification fields \textbf{treatment} is mandatory while \textbf{gender}, \textbf{generation},  
+ \textbf{age}, and \textbf{replicate} are not. 
+ However, if the replicate field is not included in the data set, Histopath will assume each specimen is 
+ independent and not apply the Rao-Scott adjustment.    
+ Any identification fields must have a value for every entry otherwise the row associated with that entry will be removed when RSCABS is ran. 
  The \textbf{treatment} field must only contain integers, with 0 indicating controls and each larger number indicating a larger dose.  
  The other identification fields do not have this restriction and can contain any combination of number and letters. 
 
@@ -190,15 +190,17 @@ which may lead to an increase in the number of
 falsely positive results. After all entry forms are filled out, click on the [Confirm Selected Values 
 and Variables] button to set the selected variables into Histopath. After the selection is set, you can navigate back to the main tab to 
 perform the RSCABS analysis.  Note, that at any time you may navigate back to the Data specification tab to change a selection, just re-click 
-the [Confirm Selected Values and Variables] button after a new selection is made to accept the change.  Clicking on [Confirm Selected Values and Variables] is what causes 
-Histopath to recognise the change in the variables.  
+the [Confirm Selected Values and Variables] button after a new selection is made to accept the change.  Clicking on [Confirm Selected Values and Variables] is what causes Histopath to recognise the change in the variables.  
+
+\par
+Some endpoints are coded in such a way that a decreasing severity score indicates an increasing severity. For instance, medaka gonad phenotype is set to a scale of 1 to 5. Where a 1 is a complete male gonad and a 5 is a complete female gonad, with scores in between indicating some degree of intersex. For genotypic males the severity of the change increases with the score for gonad phenotype but for genotypic females the scale means the opposite with 5 indicating the least severe change and 1 indicating the most severe change. To account for this, as of version 0.90.3, RSCABS has an additional button in the specification form; \textbf{[Select Endpoints to Invert]}.  Using this button you can select one or more endpoints for which RSCABS will treat the highest severity score as indicating the least severe condition and the lowest severity scores as indicating the most severe condition. In addition, if this option is selected a new column, called ``\textbf{Inverted}", will be added to the results which will use a ``\textbf{Yes}'' to indicate that the endpoint was inverted. 
      
 \subsection*{Running RSCABS}
 \label{subsec:RunRSCABS}
 \addcontentsline{toc}{subsection}{Running RSCABS}
  
 After the data has been specified and the [Confirm Selected Values and Variables] has been clicked, 
-the Histopath main tab should be navigated back to. 
+the Histopath main tab will show the data set updated with the specifications and should be navigated back to. 
 
 \label{fig:RunButton} 
 \begin{center}
@@ -231,7 +233,53 @@ and R-Score, with \textbf{P-Value} as the corresponding p-value. \textbf{Signif}
  significance flag where ``.'' is a p-value > 0.05, ``*'' is
  a 0.01 < p-value $\leq$  0.05, ``**'' for 0.001 < p-value $\leq$  0.01, and ``***'' for p-value $\leq$  0.001.     
 
+ \par
 
+ 
+ 
+\subsection*{Interpreting the Results}
+\label{subsec:IntResults}
+\addcontentsline{toc}{subsection}{Interpreting the Results}
+   
+   
+ The example below better illustrates how to interpret the results generated by RSCABS.  
+ 
+\begin{center}
+\includegraphics[width=\textwidth,keepaspectratio]{Results.png}
+\end{center} 
+ \par
+
+ 
+ 
+By default RSCABS will sort the results by decreasing \textbf{R-Scores} within reverse alphabetical order of each endpoints name. This allows for quick scanning for lowest 
+observed effect concentrations (LOEC) for each severity on every endpoint. Going down the list above and using an alpha level of 0.05 
+we see that this test;
+did not show a response in Oth\_Thymus\_Lymphoidhyperplasia, showed a LOEC of treatment 6 for Kid\_Proteinaceous\_Fluid at severity grade 3,     
+a LOEC of treatment 5 for Kid\_Proteinaceous\_Fluid at both severity grades 1 and 2, a LOEC of treatment 3 for Gon\_Phenotype at severity grade 1, 
+and LOEC of treatment 5 for Gon\_Phenotype at severity grade 2 though 4.  Note that Gon\_Phenotype is in inverse scale (as indicated by the ``Yes'' in the column ``Inverted'') so for this analysis a severity grade of 1 is 
+considered to be more severe then a score of 5. 
+
+\par 
+RSCABS sometimes produces exactly the same test statistic and p-value for different endpoints or \textbf{R-Scores}. In fact, when data is sparse
+RSCABS will commonly have exactly the same test statistic (and by extension p-value) for different \textbf{R-Scores} of the same endpoint, as shown with Oth\_Thymus\_Lymphoidhyperplasia in the image above. This is due to having 0 observations with some severity score for that endpoint. In the example above, for Oth\_Thymus\_Lymphoidhyperplasia there were two fish with a severity score of 3 (one in treatment 4 and one in treatment 2) and no fish with severity scores of 1 or 2. This causes RSCABS to produce the exact same test statistic for Oth\_Thymus\_Lymphoidhyperplasia severity score 1 and 2 as it does for severity score 3. The images below show how this information 
+can be attained. Noting the frequency table from each image, the first image shows that the there is one fish in treatment 2 and one fish in treatment 4 with a severity score of $\geq$ 1, while the second image shows the same values of fish in each treatment for a severity score of $\geq$ 3. From this it can be inferred that there are no fish with an severity score of 1 or 2 within treatment 2 and 4. 
+
+\par
+ \begin{center}
+\includegraphics[width=\textwidth,keepaspectratio]{SameResults1.png}
+\end{center} 
+ \par
+
+
+ 
+\par
+ \begin{center}
+\includegraphics[width=\textwidth,keepaspectratio]{SameResults3.png}
+\end{center} 
+ \par      
+ 
+The tables above can be obtained by using the [Get Details on a Response] button in the ``Other Analyses'' section of RSCABS.  
+ 
 
 
 \subsection*{Running Other Analyses}
@@ -259,13 +307,14 @@ More details on each histopathological endpoint can be attained through the use 
 \par
 	
  The [Get Details on a Response] button will supply three tables for the selected response; a table for the 
- Chi-squared (${\chi}^2$) test for heterogeneity of between-replicate variances. A frequency table, which contains the total observations
+ chi-squared ($\chi^2$)  test for heterogeneity of between-replicate variances. A frequency table, which contains the total observations
  for each combination of treatment (shown in the columns) and slice of score (shown in the rows). 
  There will also be an additional table showing the results of RSCABS for that treatment level.  
  If there are several unique severity scores for an endpoint, results for the lowest severity score will be displayed 
  in the main tab while results for additional severity scores will be added to the window in extra tabs. 
 The [Save] button will save the current result displayed in the window, whether it is results from SCAB 
 or the more detailed results. 
+ 
  
  
  
@@ -289,8 +338,8 @@ As an alternative to using the GUI, RSCABS can also be run through command line.
 >runRSCABS(Data, Treatment, Replicate, Effects ,test.type)
 \end{RBox}     
 
-The \textbf{Data} variable is a data set in the same format needed \hyperref[subsec:Data]{for the GUI}. \textbf{Treatment}, is the name of the treatment variable, 
-\textbf{Replicate} is the name of the replicate variable, and \textbf{Effects} is a vector of the endpoints exampleHistData.Sub tested.  If \textbf{Effects}
+The \textbf{Data} variable is a data set in the same format needed \hyperref[subsec:Data]{for the GUI}. \textbf{Treatment}, is the name (as a string) of the treatment variable, 
+\textbf{Replicate} is the name (as a string) of the replicate variable, and \textbf{Effects} is a character vector of the endpoints exampleHistData.Sub tested.  If \textbf{Effects}
 is not specified then the analysis will default to all columns that has at least one integer greater than 0 and no integers less then 20. 
  The \textbf{test.type} input can be either ``RS'' or ``CA'' for either the RSCABS analysis or 
 the SCABS analysis respectively. The \textbf{Replicate} input does not need to be specified, however if it is not specified 
@@ -312,6 +361,9 @@ example analysis in the \hyperref[subsec:RunRSCABS]{\textbf{Running RSCABS}} sec
 	'Replicate',test.type='RS')
 \end{RBox}     
 \par
+
+
+
 
 
 
@@ -449,7 +501,7 @@ of the treatment variable.  \hyperlink{here:metric}{\textbf{Metric}} controls fo
 or percent of total counts ("Percent"), while 
 \textbf{Lowest} allows for the removal ("Remove") or inclusion ("Include") of non-effected responses. \textbf{Format} is the name of any 
 \hyperlink{fig:PlottingFormates}{file format} R can save graphs in, including high resolution graphs which are saved using the 'tiff' format. \textbf{File} is the name of the file the graph is saved to. 
-Lastly, the \textbf{plotRSCABS} function can also include any argument used by the \textbf{barplot} function.              
+Lastly, the \textbf{plotRSCABS} function can also include any arguments used by the \textbf{barplot} function.              
 
 
 
@@ -471,14 +523,14 @@ Lastly, the \textbf{plotRSCABS} function can also include any argument used by t
 \begin{enumerate}
 \item Armitage, P. 1955. Tests for Linear Trends in Proportions and Frequencies. \textit{Biometrics} \textbf{11}(3): 417\textemdash451
 
-\item  Cochran, WG 1954. Some methods for strengthening the common $\chi$-squared tests. \textit{Biometrics}  \textbf{10}(4): 417\textemdash451
+\item  Cochran, WG 1954. Some methods for strengthening the common chi-squared tests. \textit{Biometrics}  \textbf{10}(4): 417\textemdash451
 
 \item Green, John W. and Springer, Timothy A. and Saulnier, Amy N. and Swintek, Joe. 2014 Statistical analysis of histopathological endpoints. 
 	\textit{Environmental Toxicology and Chemistry}, \textbf{33}(5): 1108\textemdash1116
 
 \item OECD Guidelines for the Testing of Chemicals, Section 2. Test No. 240. DOI10.1787/20745761 
 
-\item Rao, J. N. K. and Scott, A. J. A. 1992. Simple Method for the Analysis of Clustered Data. \textit{Biometrics}, \textbf{48}: 577\textemdash586. 
+\item  Rao, J. N. K. \& Scott, A. J. A. 1992. Simple Method for the Analysis of Clustered Data. \textit{Biometrics}, \textbf{48}: 577\textemdash586. 
 
 \end{enumerate}
 

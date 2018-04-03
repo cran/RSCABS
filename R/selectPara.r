@@ -37,8 +37,10 @@ if (is.null(What)==TRUE){
 	SubSetSelect<- gtable(Varaibles,container=group,expand=TRUE,multiple=Mult)
 	SelectButton <- gbutton("Select",container=group,handler= function(h,...){ 
 	assign(VarName,   SubSetSelect[svalue(SubSetSelect,index=TRUE), ], envir = get(Enviro))
-
-	if (Mult==TRUE){
+	try(tempVar<-get(VarName, envir = get(Enviro)),silent = TRUE)
+	
+	
+	if (Mult==TRUE & length(tempVar) > 1){
 		if(is.null(LabelName)==FALSE){
 			try(temp<-get(LabelName,envir =get(Enviro)))		
 			try(svalue(temp) <- 'Multiple Values');	

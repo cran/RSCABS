@@ -9,7 +9,7 @@
 	calculates a frequency table, and recalculates RSCABS.	
 }
 \usage{
-runDetailedResults(Data, GroupVar = "", ReplicateVar = "", effect = "")
+runDetailedResults(Data, GroupVar = "", ReplicateVar = "", effect = "",Inverse=FALSE)
 }
 \arguments{
   \item{Data}{
@@ -24,6 +24,10 @@ runDetailedResults(Data, GroupVar = "", ReplicateVar = "", effect = "")
   \item{effect}{
 	The effect being tested.
 }
+  \item{Inverse}{
+	Bool, indicating that this effect is an inverse scale effect.
+}
+
 }
 
 

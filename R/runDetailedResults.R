@@ -1,5 +1,5 @@
 runDetailedResults <-
-function(Data,GroupVar='',ReplicateVar='',effect=''){
+function(Data,GroupVar='',ReplicateVar='',effect='',Inverse=FALSE){
 
 #This is a function to perform RSCABS or Scabs on One effect of the data
 #This will be much slower then using RSCABSMain for all effects, but gives more information
@@ -47,9 +47,10 @@ Data<-Data[ ,c(effect,ReplicateVar,GroupVar)]
 #remove NAs
 
 #Pre and test Data------------------------------------------------------------
+oldw <- getOption("warn")
 options(warn=-1)
 Data[which(Data[ ,effect]<0) ,effect]<-NA   #negatives are treated as NA
-options(warn=0)
+options(warn=oldw)
 
 if (length(which(is.na(Data[ ,effect])))>0){
 Data<-Data[-which(is.na(Data[ ,effect])), ]
@@ -75,21 +76,28 @@ Data[ ,GroupVar]<-as.factor(Data[ ,GroupVar])
 #Main Loop for each Severity Score
 for (i in 1:Kn){
 
-#Reshape the Data
-PrepData<-{}
-#Find the levels of each effect
-TN<-nlevels(Data[ ,GroupVar])        #number of treatments
-Tlevel<-levels(Data[ ,GroupVar])     #vector of treatment names
-RN<-nlevels(Data[ ,ReplicateVar])    #number of Replicates
-Rlevel<-levels(Data[ ,ReplicateVar]) #vector of replicate names
+	#Reshape the Data
+	PrepData<-{}
+	#Find the levels of each effect
+	TN<-nlevels(Data[ ,GroupVar])        #number of treatments
+	Tlevel<-levels(Data[ ,GroupVar])     #vector of treatment names
+	RN<-nlevels(Data[ ,ReplicateVar])    #number of Replicates
+	Rlevel<-levels(Data[ ,ReplicateVar]) #vector of replicate names
 
 for (j in 1:TN){
-Sub1<-subset(Data,Data[ ,GroupVar]==Tlevel[j]) #by group
-PrepData[[j]]<-mat.or.vec(2,RN)
+	Sub1<-subset(Data,Data[ ,GroupVar]==Tlevel[j]) #by group
+	PrepData[[j]]<-mat.or.vec(2,RN)
 for (z in 1:RN){
-Sub2<-subset(Sub1,Sub1[ ,ReplicateVar]==Rlevel[z]) #by group
-PrepData[[j]][1,z]<-length(which(Sub2[ ,effect]>=i))  #Number greater then or equal to Severity score 
-PrepData[[j]][2,z]<-length(Sub2[ ,effect])
+	Sub2<-subset(Sub1,Sub1[ ,ReplicateVar]==Rlevel[z]) #by group
+	PrepData[[j]][1,z]<-length(which(Sub2[ ,effect]>=i))  #Number greater then or equal to Severity score 
+	PrepData[[j]][2,z]<-length(Sub2[ ,effect])
+	
+	#Added 2018-3-30
+	if (Inverse==TRUE){
+		PrepData[[j]][1,z]<-length(which(Sub2[ ,effect]<=i))  #Number greater then or equal to Severity score 
+		PrepData[[j]][2,z]<-length(Sub2[ ,effect])
+	}
+	
 }
 #remove columns of no observations
 
@@ -149,32 +157,35 @@ n.i.j[ ,j]<-PrepData[[j]][2, ]
 #RSABS
 #Variable names are the same as in Rao and Scott 1992
 
-Step<-{} #The results from each step down
-Test=1  #This will keep stepping down the dose until a significant result is no longer found
-count=0;
-while (Test>0){
-
-m.i<-as.matrix(m.i)
-#This calculates RSCABS
-RSCAeffect<-RSCABK(x.i.j,n.i.j,m.i,i,'RS')   #This calculates RSCABS
-
-Row<-cbind(paste(effect,RSCAeffect['R-Score'],sep=''),RSCAeffect$Treatment,RSCAeffect['R-Score'],
-RSCAeffect$Statistic,RSCAeffect['P-Value'],RSCAeffect['Signif'])  #A response for the summary table
-
-count<-count+1;
-Step[[count]]<-list('FreqTable'=FreqTable,'RSCAB'=Row)
-Test=sum(RSCAeffect$Sig!='.')
-
-#Step down
-m.i<-m.i[-length(m.i)[1] ]
-FreqTable<-FreqTable[  ,-dim(FreqTable)[2]]
-x.i.j<-x.i.j[ ,-dim(x.i.j)[2] ]; n.i.j<-n.i.j[ ,-dim(n.i.j)[2]]; 
 
 
-if (is.matrix(FreqTable)==FALSE){
-Test=0   #End step down
-}
-}
+
+
+ Step<-{} #The results from each step down
+ Test=1  #This will keep stepping down the dose until a significant result is no longer found
+ count=0;
+ while (Test>0){
+
+	 m.i<-as.matrix(m.i)
+	 #This calculates RSCABS
+	 RSCAeffect<-RSCABK(x.i.j,n.i.j,m.i,i,'RS')   #This calculates RSCABS
+
+	 Row<-cbind(paste(effect,RSCAeffect['R-Score'],sep=''),RSCAeffect$Treatment,RSCAeffect['R-Score'],
+	 RSCAeffect$Statistic,RSCAeffect['P-Value'],RSCAeffect['Signif'])  #A response for the summary table
+
+	 count<-count+1;
+	 Step[[count]]<-list('FreqTable'=FreqTable,'RSCAB'=Row)
+	 Test=sum(RSCAeffect$Sig!='.')
+
+	 #Step down
+	 m.i<-m.i[-length(m.i)[1] ]
+	 FreqTable<-FreqTable[  ,-dim(FreqTable)[2]]
+	 x.i.j<-x.i.j[ ,-dim(x.i.j)[2] ]; n.i.j<-n.i.j[ ,-dim(n.i.j)[2]]; 
+
+	 if (is.matrix(FreqTable)==FALSE){
+		Test=0   #End step down
+	 }
+ }
 
 Out[[i]]<-list('ChiResults'=ChiResults,'Step'=Step);
 

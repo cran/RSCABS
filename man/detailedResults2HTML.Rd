@@ -9,7 +9,7 @@
 	An internal function that prints results from \code{\link{runDetailedResults}} to  an HTML file.   
 }
 \usage{
-detailedResults2HTML(Results, k, Dir, Effect)
+detailedResults2HTML(Results, k, Dir, Effect,Inverse=FALSE)
 }
 
 \arguments{
@@ -25,6 +25,10 @@ detailedResults2HTML(Results, k, Dir, Effect)
   \item{Effect}{
 	The name of the endpoint to be saved.
 }
+  \item{Inverse}{
+	Bool indicating an inverse scale endpoint.
+}
+
 }
 
 

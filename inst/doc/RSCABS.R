@@ -1,7 +1,7 @@
 ### R code from vignette source 'RSCABS.Rnw'
 
 ###################################################
-### code chunk number 1: RSCABS.Rnw:398-440
+### code chunk number 1: RSCABS.Rnw:450-492
 ###################################################
 require(RSCABS)
 data(exampleHistData)

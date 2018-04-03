@@ -42,7 +42,19 @@ if (identical(Lowest,'Remove')){
 	}
 	if (is.null(PlotParms$main)==TRUE){			  
 		PlotParms$main<-Effect
-		try(PlotParms$main<-paste(Effect,'for \n',.RSCABSEnv$GenerationVal,.RSCABSEnv$GenderVal,.RSCABSEnv$AgeVal))	#Relies on entry form 	
+		#Added 2018-3-29 to remove long chains of "Not Used"
+			GenerationVal<-.RSCABSEnv$GenerationVal
+				try(if (GenerationVal=='Not Used'){GenerationVal<-''})
+			GenderVal<-.RSCABSEnv$GenderVal
+				try(if (GenderVal=='Not Used'){GenderVal<-''})
+			AgeVal<-.RSCABSEnv$AgeVal
+				try(if (AgeVal=='Not Used'){AgeVal<-''})
+
+		try(PlotParms$main<-paste(Effect,'for \n',GenerationVal,GenderVal,AgeVal))	#Relies on entry form 	
+		if (AgeVal=='' & GenderVal=='' & GenerationVal==''){
+			PlotParms$main<-Effect
+		}			
+				
 	}	
 	if (is.null(PlotParms$legend.text)==TRUE){			  
 		PlotParms$legend.text<-rownames(Out)			

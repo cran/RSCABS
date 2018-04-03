@@ -61,21 +61,42 @@ RepVarFrame<-gframe(horizontal = FALSE, container=DesignBox,expand=TRUE)
 size(RepVarFrame)<-c(175,35)
 
 
+#This box contains all the buttons related to column selection
+NamesBox<-gframe(horizontal = TRUE, spacing = 5, container=SpecGroup)
+	InverseButton<-gbutton("Select Endpoint(s) to Invert",container=NamesBox,handler= function(h,...){  
+		selectPara('InverseScaleVar','InvertLabel','.RSCABSEnv',Mult=TRUE,Display='Please select endpoint that have an inverted scale.')})
+		InvertFrame<-gframe(horizontal = FALSE, container=NamesBox,expand=TRUE)
+	.RSCABSEnv$InvertLabel<-glabel("Nothing Inverted",container=InvertFrame,expand=TRUE)
+	size(InvertFrame)<-c(175,35)
+
+
 EndBox<-gframe(horizontal = FALSE, container=SpecGroup)
 #This button will run the check to make sure the analysis can run
 OkButton<-gbutton("Confirm Selected Values and Variables",container=EndBox,handler= function(h,...){
-msg<-checkSelction()
-if(msg=='You still need to select:\n'){
-.RSCABSEnv$CanRun<-TRUE
-.RSCABSEnv$UseData<-runStdSubset(.RSCABSEnv$MainData)
-delete(.RSCABSEnv$DataBox,.RSCABSEnv$DataGrid)
-add(.RSCABSEnv$ButtonBox,.RSCABSEnv$RunButton)
-add(.RSCABSEnv$ButtonBox,.RSCABSEnv$OtherButton)
-.RSCABSEnv$DataGrid<-gtable(.RSCABSEnv$UseData)
-add(.RSCABSEnv$DataBox,.RSCABSEnv$DataGrid,expand=TRUE)
-popMessage('The analysis can be ran from the Histopath Main tab')}
-if(msg!='You still need to select:\n'){
-popMessage(msg)}
+	msg<-checkSelction()
+	if(msg=='You still need to select:\n'){
+		.RSCABSEnv$CanRun<-TRUE
+		.RSCABSEnv$UseData<-runStdSubset(.RSCABSEnv$MainData)
+		delete(.RSCABSEnv$DataBox,.RSCABSEnv$DataGrid)
+		add(.RSCABSEnv$ButtonBox,.RSCABSEnv$RunButton)
+		add(.RSCABSEnv$ButtonBox,.RSCABSEnv$OtherButton)
+		.RSCABSEnv$DataGrid<-gtable(.RSCABSEnv$UseData)
+		add(.RSCABSEnv$DataBox,.RSCABSEnv$DataGrid,expand=TRUE)
+		popMessage('The analysis can be ran from the Histopath Main tab')
+	}
+	if(msg!='You still need to select:\n'){
+		#apply InverseScaleVar
+	popMessage(msg)}
 })
-
 }
+
+
+
+
+
+
+
+
+
+
+

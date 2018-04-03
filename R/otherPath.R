@@ -14,15 +14,37 @@ add(.RSCABSEnv$OtherHistNotebook,.RSCABSEnv$OtherMaingroup, label='Histopath Oth
 
 .RSCABSEnv$OtherButtonBox<-gframe(horizontal = FALSE, container=.RSCABSEnv$OtherMaingroup)
 SCABSButton<-gbutton("Run SCABS",container=.RSCABSEnv$OtherButtonBox,handler= function(h,...){
-.RSCABSEnv$ResultsSCAB<-RSCABSMain(.RSCABSEnv$UseData,.RSCABSEnv$TreatmentVar,.RSCABSEnv$ReplicateVar,TRUE)
-delete(.RSCABSEnv$OtherMaingroup,.RSCABSEnv$OtherDataBox)
-.RSCABSEnv$OtherDataBox<-gframe(horizontal = FALSE,expand=TRUE)
-add(.RSCABSEnv$OtherMaingroup,.RSCABSEnv$OtherDataBox,expand=TRUE)
-.RSCABSEnv$DataGrid<-gtable(.RSCABSEnv$ResultsSCAB,container=.RSCABSEnv$OtherDataBox,expand=TRUE)
-.RSCABSEnv$LastTest<-'SCABS'
-})
+	
+		#Invert data for the analysis 
+			if (is.element('Not Used',.RSCABSEnv$InverseScaleVar)==FALSE){
+				.RSCABSEnv$UseData<-.invertOrder(.RSCABSEnv$UseData,.RSCABSEnv$InverseScaleVar)
+			}
+			
+	Sys.sleep(0.1) #need to pause 
+	.RSCABSEnv$ResultsSCAB<-RSCABSMain(.RSCABSEnv$UseData,.RSCABSEnv$TreatmentVar,.RSCABSEnv$ReplicateVar,TRUE)
+	
+	#Clean results
+	.RSCABSEnv$ResultsSCAB<-unique(.RSCABSEnv$ResultsSCAB)
+	.RSCABSEnv$ResultsSCAB<-.orderOutput(.RSCABSEnv$ResultsSCAB)
+	
+		#Un-invert the scale for plotting purposes
+			if (is.element('Not Used',.RSCABSEnv$InverseScaleVar)==FALSE){
+				.RSCABSEnv$UseData<-.invertOrder(.RSCABSEnv$UseData,.RSCABSEnv$InverseScaleVar)
+				#Un-invert the R-Score on the results tags 
+				.RSCABSEnv$ResultsSCAB<-.tagInvert(.RSCABSEnv$ResultsSCAB,.RSCABSEnv$UseData,.RSCABSEnv$InverseScaleVar)
+			}
+			
+	Sys.sleep(0.1) #need to pause 
+	
+	delete(.RSCABSEnv$OtherMaingroup,.RSCABSEnv$OtherDataBox)
+	.RSCABSEnv$OtherDataBox<-gframe(horizontal = FALSE,expand=TRUE)
+	add(.RSCABSEnv$OtherMaingroup,.RSCABSEnv$OtherDataBox,expand=TRUE)
+	.RSCABSEnv$DataGrid<-gtable(.RSCABSEnv$ResultsSCAB,container=.RSCABSEnv$OtherDataBox,expand=TRUE)
+	.RSCABSEnv$LastTest<-'SCABS'
+	})
+	
 ResponseButton<-gbutton("Get Details on a Response",container=.RSCABSEnv$OtherButtonBox,handler= function(h,...){
-runEffectSelect()
+	runEffectSelect()
 })
 #Runs analysis on all effects
 AllResponseButton<-gbutton("Get Details on all Responses",container=.RSCABSEnv$OtherButtonBox,handler= function(h,...){
@@ -34,23 +56,28 @@ popMessage('A folder was not selected\nPlease Select a folder')
 ColNames<-NULL
 return()
 }
+oldw <- getOption("warn")
 options(warn=-1)
 dir.create(Dir)
-options(warn=0)
+options(warn=oldw)
 
 ResultsDetail<-{}
+oldw <- getOption("warn")
 options(warn=-1)
 for (effect in ColNames){
 Filter<-filterData(effect,.RSCABSEnv$UseData)
 if (Filter == TRUE) {
-ResultsDetail<-runDetailedResults(.RSCABSEnv$UseData,.RSCABSEnv$TreatmentVar,.RSCABSEnv$ReplicateVar,effect)
+	#2018-3-30
+	InverseBool = is.element(effect,.RSCABSEnv$InverseScaleVar)
+	
+	ResultsDetail<-runDetailedResults(.RSCABSEnv$UseData,.RSCABSEnv$TreatmentVar,.RSCABSEnv$ReplicateVar,effect,InverseBool)
 Kn<-length(ResultsDetail)
 for (k in 1:Kn){
 if (identical(ResultsDetail,'No Information')==FALSE ){
-detailedResults2HTML(ResultsDetail,k,Dir,effect)
+	detailedResults2HTML(ResultsDetail,k,Dir,effect,InverseBool)
 }
 }}}
-	options(warn=0)
+	options(warn=oldw)
 	popMessage('Analysis Complete')
 	})
 
@@ -64,12 +91,15 @@ detailedResults2HTML(ResultsDetail,k,Dir,effect)
 	popMessage('A folder was not selected\nPlease Select a folder')
 	return()
 	}
+	oldw <- getOption("warn")
 	options(warn=-1)
 	dir.create(Dir)
-	options(warn=0)
+	options(warn=oldw)
 	if (.RSCABSEnv$ResultsEffect !="No Information" ) {
+		InverseBool = is.element(.RSCABSEnv$effect,.RSCABSEnv$InverseScaleVar)
+	
 	for (k in 1:Kn){
-	detailedResults2HTML(.RSCABSEnv$ResultsEffect,k,Dir,.RSCABSEnv$effect)
+	detailedResults2HTML(.RSCABSEnv$ResultsEffect,k,Dir,.RSCABSEnv$effect,InverseBool)
 	}}},
 	)
 	})
