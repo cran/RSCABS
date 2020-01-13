@@ -1,6 +1,6 @@
 Package: RSCABS
-Version: 0.9.3
-Date: 2018-04-05
+Version: 0.9.4
+Date: 2020-1-13
 Title: Rao-Scott Cochran-Armitage by Slices Trend Test
 Authors@R: c(person("Joe", "Swintek", role = c("aut", "cre"), email = "swintek.joe@epa.gov"),
 		  person("Kevin", "Flynn", role = "ctb", email = "Flynn.Kevin@epa.gov")
@@ -20,8 +20,8 @@ URL: https://CRAN.R-project.org/package=RSCABS
 Author: Joe Swintek [aut, cre],
   Kevin Flynn [ctb]
 Maintainer: Joe Swintek <swintek.joe@epa.gov>
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 NeedsCompilation: no
-Packaged: 2018-04-03 20:29:33 UTC; jswintek
+Packaged: 2020-01-13 19:24:13 UTC; jswintek
 Repository: CRAN
-Date/Publication: 2018-04-03 20:55:44 UTC
+Date/Publication: 2020-01-13 20:00:02 UTC

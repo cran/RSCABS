@@ -67,14 +67,17 @@
 
 
 \examples{
+	\dontrun{
+## Not run: 
 #Take the subset corresponding to F0-females of 16 weeks of age
-	exampleHistData.sub<-exampleHistData[which(exampleHistData$Generation=='F2' & 
-		exampleHistData$Genotypic_Sex=='Female' & exampleHistData$Age=='16_wk' ),  ]
+data(exampleHistData)
+exampleHistData.sub<-exampleHistData[which(exampleHistData$Generation=='F2' & 
+	exampleHistData$Genotypic_Sex=='Female' & exampleHistData$Age=='16_wk' ),  ]
 #Run RSCABS	
 	exampleResults<-runRSCABS(exampleHistData.sub,'Treatment',
 		'Replicate',test.type='RS')
 	}
-
+}
 \keyword{RSCABS}
 
 

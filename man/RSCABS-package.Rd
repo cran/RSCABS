@@ -39,9 +39,18 @@ The command line version uses \code{\link{runRSCABS}} (see example below). Use t
 \keyword{RSCABS}
 
 \examples{
-	#Take the subset corresponding to F0-females of 16 weeks of age
-	exampleHistData.sub<-exampleHistData[which(exampleHistData$Generation=='F2' & 
-		exampleHistData$Genotypic_Sex=='Female' & exampleHistData$Age=='16_wk' ),  ]
-	#Run RSCABS	
-	exampleResults<-runRSCABS(exampleHistData.sub,'Treatment','Replicate',test.type='RS')
+## Not run: 
+#Take the subset corresponding to F0-females of 16 weeks of age
+\dontrun{
+data(exampleHistData)
+exampleHistData.sub<-exampleHistData[which(exampleHistData$Generation=='F2' & 
+	exampleHistData$Genotypic_Sex=='Female' & exampleHistData$Age=='16_wk' ),  ]
+#Run RSCABS	
+exampleResults<-runRSCABS(exampleHistData.sub,'Treatment','Replicate',test.type='RS')
 	}
+	}
+
+
+
+
+
