@@ -1,6 +1,6 @@
-24b1cf0d93d2a42e8c5fc946c977515e *DESCRIPTION
+46642865f4d21a008a10dc98dfbe7337 *DESCRIPTION
 ed9a7a2b70e963bccd0fddf23f3690d5 *INDEX
-bef0a318831ce1170319631d1462df3e *NAMESPACE
+270a9498e4a8517d9a1a7e819e55f540 *NAMESPACE
 ac79b80f4a43238e269eccbaa96c8aed *R/Histopath.R
 7b8a896a1434c2d348e99b4bd8edc0d1 *R/RSCABK.R
 e93e16cdd37eddca1c3038f7f3f60acc *R/RSCABS-internal.R
@@ -30,13 +30,13 @@ f619bd6c13617ab2f4d8cb5107c26a72 *R/runStdSubset.R
 d0c3ba6cbb7f54f98078eb1a601c4d30 *R/stepDownRSCABS.R
 319bb8f9fb4e3a2de321c09c929f8cc6 *R/stepKRSCABS.R
 3b48f1ad7c2fcb1742c0faed1103ae0f *R/subsetDataKeep.R
-8e185bb7cbd9e6f27a3d9b7496b84f28 *R/zzz.r
-aa52b86ff3abca0af71108b5092581b8 *build/vignette.rds
+4b5fe709d2754bc81768f916a1d2b6f0 *R/zzz.r
+0d4b011edc75c7d49699829406f2d1db *build/vignette.rds
 26c674d251f79f186d0d316dcdd42b47 *data/exampleHistData.rda
 276cb668c23ed21ff7cb184e29fc9693 *inst/CITATION
 3e528e191bd0a11c484c90fc426afa95 *inst/doc/RSCABS.R
 61b4d7e180de07796b4e96704cb7e5b3 *inst/doc/RSCABS.Rnw
-73ab4a2402fef2cea97ecdc8dcb81408 *inst/doc/RSCABS.pdf
+d87d70170d632e34c09c24f198f188ef *inst/doc/RSCABS.pdf
 1b2d793ca5fa8e77aa9234fd715ce77e *man/Histopath.Rd
 470ffda849ac278644144a7c1e5f71ab *man/RSCABK.Rd
 5af161786e3e87e6b49ab435f12cd3bd *man/RSCABS-package.Rd
